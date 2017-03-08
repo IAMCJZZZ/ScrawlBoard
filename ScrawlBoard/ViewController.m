@@ -31,8 +31,11 @@
     
     if (!self.mainView) {
         self.mainView = [[[UINib nibWithNibName:@"MainView" bundle:[NSBundle mainBundle]] instantiateWithOwner:self options:nil] lastObject];
+        //设置为全屏
         self.mainView.frame = CGRectMake(0, 0, kWidth, kHeight);
+        //代理
         self.mainView.delegate = self;
+        //设置画笔最大宽度
         self.mainView.pathMaxWidth = 30;
         
         [self.view addSubview:self.mainView];

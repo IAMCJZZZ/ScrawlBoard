@@ -370,6 +370,7 @@
 				2376EA561E6EAFC100C0C8EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

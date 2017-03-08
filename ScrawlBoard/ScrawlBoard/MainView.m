@@ -121,17 +121,6 @@
     self.scrawlBackImageView.image = backImage;
 }
 
-/** 橡皮擦(功能待优化) */
-- (IBAction)clickEraserButton:(UIButton *)sender
-{
-    sender.selected = !sender.selected;
-    if (sender.isSelected) {
-        self.scrawlView.pathColor = self.scrawlView.backgroundColor;
-    } else {
-        self.scrawlView.pathColor = RGBCOLOR(self.pathRedValue, self.pathGreenValue, self.pathBlueValue);
-    }
-}
-
 /** 撤销 */
 - (IBAction)clickRepealButton:(id)sender
 {
@@ -146,6 +135,8 @@
 {
     [self.scrawlView.paths removeAllObjects];
     [self.scrawlView setNeedsDisplay];
+    self.scrawlBackImageView.image = [UIImage imageNamed:@""];
+    self.scrawlView.backgroundColor = RGBCOLOR(self.backRedValue, self.backGreenValue, self.backBlueValue);
 }
 
 /** 保存当前画板图片 */

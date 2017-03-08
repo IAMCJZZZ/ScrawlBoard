@@ -47,5 +47,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
+/** 橡皮擦(功能待优化)
+- (IBAction)clickEraserButton:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    if (sender.isSelected) {
+        self.scrawlView.pathColor = self.scrawlView.backgroundColor;
+    } else {
+        self.scrawlView.pathColor = RGBCOLOR(self.pathRedValue, self.pathGreenValue, self.pathBlueValue);
+    }
+}
+ */
 @end
