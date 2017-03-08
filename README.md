@@ -40,6 +40,7 @@
 ```
 
 * 自定义颜色作为画板背景颜色
+
 ![颜色背景.png](http://upload-images.jianshu.io/upload_images/1825076-267f74a6d858e5f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 * 用图片作为画板背景
@@ -47,4 +48,5 @@
 ![图片背景.png](http://upload-images.jianshu.io/upload_images/1825076-5f938d89e8b5caca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 * 保存后查看图片
+
 ![查看图片.png](http://upload-images.jianshu.io/upload_images/1825076-7155f8e9068d4fad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
