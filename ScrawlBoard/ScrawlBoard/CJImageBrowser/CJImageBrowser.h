@@ -1,0 +1,16 @@
+//
+//  CJImageBrowser.h
+//  XY
+//
+//  Created by 耳东米青 on 2016/12/30.
+//  Copyright © 2016年 XY. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@interface CJImageBrowser : NSObject
+
++(void)showImage:(UIImageView *)avatarImageView;
+
+@end

@@ -1,0 +1,17 @@
+//
+//  CJImageLooker.h
+//  XY
+//
+//  Created by 耳东米青 on 2017/1/4.
+//  Copyright © 2017年 XY. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface CJImageLooker : NSObject
+
++ (CJImageLooker *)shareInstance;
+
+- (void)showImage:(UIImageView *)targetImageView;
+
+@end

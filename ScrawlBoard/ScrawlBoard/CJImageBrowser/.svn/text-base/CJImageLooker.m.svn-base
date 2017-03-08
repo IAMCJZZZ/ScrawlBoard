@@ -1,0 +1,165 @@
+//
+//  CJImageLooker.m
+//  XY
+//
+//  Created by 耳东米青 on 2017/1/4.
+//  Copyright © 2017年 XY. All rights reserved.
+//
+
+#define CJScreenWidth  [UIScreen mainScreen].bounds.size.width
+#define CJScreenHeight [UIScreen mainScreen].bounds.size.height
+
+#import "CJImageLooker.h"
+
+@interface CJImageLooker ()<UIScrollViewDelegate>
+
+@property (nonatomic, weak) UIScrollView * backScrollView;
+@property (nonatomic, strong) UIImageView * orginImageView;
+@property (nonatomic, weak) UIImageView * newsImageView;
+@property (nonatomic, assign) BOOL isExpand;
+
+@end
+
+@implementation CJImageLooker
+
++ (CJImageLooker *)shareInstance
+{
+    static CJImageLooker *looker = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        looker = [[CJImageLooker alloc]init];
+    });
+    return looker;
+}
+
+- (void)showImage:(UIImageView *)targetImageView
+{
+    UIImage * image = targetImageView.image;
+    
+    self.orginImageView = targetImageView;
+    self.orginImageView.alpha = 0;
+    
+    UIWindow * window = [UIApplication sharedApplication].keyWindow;
+    
+    UIScrollView * backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, CJScreenWidth, CJScreenHeight)];
+    backScrollView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+    [backScrollView setMinimumZoomScale:0.5];//设置最小的缩放大小
+    [backScrollView setMaximumZoomScale:2.0];//设置最大的缩放大小
+    backScrollView.delegate = self;
+    backScrollView.contentSize = CGSizeMake(CJScreenWidth, CJScreenHeight);
+    
+    //添加单击隐藏手势
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
+    [backScrollView addGestureRecognizer:singleTap];
+    
+    [window addSubview:backScrollView];
+    self.backScrollView = backScrollView;
+    
+    //获取图片在window上的rect
+    CGRect oldframe = [targetImageView convertRect:targetImageView.bounds toView:window];
+    
+    UIImageView * newImageView = [[UIImageView alloc]initWithFrame:oldframe];
+    newImageView.image = image;
+    newImageView.tag = 1;
+    newImageView.contentMode = UIViewContentModeScaleAspectFit;
+    newImageView.clipsToBounds = YES;
+    newImageView.userInteractionEnabled = YES;
+    
+    //添加双击手势
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTapGesAction:)];
+    doubleTap.numberOfTapsRequired = 2;
+//    [newImageView addGestureRecognizer:doubleTap];
+    
+    [backScrollView addSubview:newImageView];
+    self.newsImageView = newImageView;
+    
+    //动画放大到全屏
+    [UIView animateWithDuration:0.2 animations:^{
+//        newImageView.frame=CGRectMake( 0, (CJScreenHeight - image.size.height * CJScreenWidth / image.size.width) / 2, CJScreenWidth, image.size.height * CJScreenWidth / image.size.width);
+        newImageView.frame = CGRectMake(0, 0, CJScreenWidth, CJScreenHeight);
+        
+        backScrollView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:1];
+    }];
+    
+    self.isExpand = YES;
+}
+
+- (void)doubleTapGesAction:(UIGestureRecognizer*)gestureRecognizer//手势执行事件
+{
+    float newscale=0.0;
+    
+    if (self.isExpand) {
+        newscale = 2 * 1.5;
+        self.isExpand = NO;
+    } else {
+        newscale = 1.0;
+        self.isExpand = YES;
+    }
+    
+    CGRect zoomRect = [self zoomRectForScale:newscale withCenter:[gestureRecognizer locationInView:gestureRecognizer.view]];
+    
+    NSLog(@"zoomRect:%@",NSStringFromCGRect(zoomRect));
+    
+    [self.backScrollView zoomToRect:zoomRect animated:YES];//重新定义其cgrect的x和y值
+}
+
+//当UIScrollView尝试进行缩放的时候调用
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.newsImageView;
+}
+
+//当缩放完毕的时候调用
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+{
+    NSLog(@"结束缩放 - %f", scale);
+    
+    if (scale < 1) {
+        [self.backScrollView setZoomScale:1 animated:YES];
+    } else {
+        [self.backScrollView setZoomScale:scale animated:YES];
+    }
+}
+
+//当正在缩放的时候调用
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
+{
+    NSLog(@"正在缩放.....");
+}
+
+- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center
+{
+    CGRect zoomRect;
+    
+    zoomRect.size.height = [self.backScrollView frame].size.height / scale;
+    
+    zoomRect.size.width  = [self.backScrollView frame].size.width  / scale;
+    
+    zoomRect.origin.x    = center.x - (zoomRect.size.width  / 2.0);
+    
+    zoomRect.origin.y    = center.y - (zoomRect.size.height / 2.0);
+    
+    return zoomRect;
+}
+
+- (void)hideImage:(UITapGestureRecognizer*)tap
+{
+    UIView *backgroundView = tap.view;
+    
+    UIImageView *imageView = (UIImageView*)[tap.view viewWithTag:1];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        imageView.frame=[self.orginImageView convertRect:self.orginImageView.bounds toView:[UIApplication sharedApplication].keyWindow];
+        backgroundView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0];
+        
+    } completion:^(BOOL finished) {
+        
+        [backgroundView removeFromSuperview];
+        self.orginImageView.alpha = 1;
+    }];
+}
+
+@end
