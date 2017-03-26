@@ -10,6 +10,9 @@
 
 @protocol MainViewDelegate <NSObject>
 
+/**
+ 打开相册
+ */
 - (void)openPhotoAlbum;
 
 @end
