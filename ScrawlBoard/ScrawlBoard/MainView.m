@@ -190,7 +190,7 @@
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
             
-            if (success && i == self.images.count - 1) {
+            if (i == self.images.count - 1) {
                 
                 [self removeLoadingView];
                 

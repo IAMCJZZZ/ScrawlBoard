@@ -164,7 +164,7 @@
 				TargetAttributes = {
 					2376EA3C1E6EAFC100C0C8EC = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = PE998594XR;
+						DevelopmentTeam = A42U927466;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -331,7 +331,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = PE998594XR;
+				DEVELOPMENT_TEAM = A42U927466;
 				INFOPLIST_FILE = ScrawlBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XY.ScrawlBoard;
@@ -343,7 +343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = PE998594XR;
+				DEVELOPMENT_TEAM = A42U927466;
 				INFOPLIST_FILE = ScrawlBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XY.ScrawlBoard;

@@ -32,7 +32,7 @@
     if (!self.mainView) {
         self.mainView = [[[UINib nibWithNibName:@"MainView" bundle:[NSBundle mainBundle]] instantiateWithOwner:self options:nil] lastObject];
         //设置为全屏
-        self.mainView.frame = CGRectMake(0, 0, kWidth, kHeight);
+        self.mainView.frame = CGRectMake( 0, 44, kWidth, kHeight - 44);
         //代理
         self.mainView.delegate = self;
         //设置画笔最大宽度
